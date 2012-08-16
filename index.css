@@ -1,0 +1,12 @@
+body, iframe, div{
+	border: 0;
+	margin: 0;
+}
+#layer{
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 999px;
+	height: 750px;
+}

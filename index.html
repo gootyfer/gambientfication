@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<title>GambientFication</title>
+		<link rel="stylesheet" type="text/css" href="index.css">
+		<script type="text/javascript">
+			var refs = ["hangman.html", "risk.html", "chart.html"];
+			var i = 0;
+			//loadRef();
+			setInterval(loadRef, 10000);
+			function loadRef(){
+				document.getElementById("frame").src = refs[(i++)%3];
+				console.log("showing... "+refs[i%3]);
+			}
+		</script>
+	</head>
+	<body>
+		<iframe id="frame" style="height:750px; width:999px;"></iframe>
+		<div id="layer"></div>
+	</body>
+</html>

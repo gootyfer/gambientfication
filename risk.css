@@ -1,0 +1,72 @@
+body{
+	text-align: center;
+	margin: 5px auto;
+}
+#users_div{
+	height: 150px;
+	margin: auto;
+	display: inline-block;
+}
+.userInfo{
+	float:left;
+	width:120px;
+	height: 150px;
+	border-radius: 8px; 
+}
+img{
+	display:block; 
+	margin: auto; 
+	padding: 8px;
+}
+h4{
+	text-align:center; 
+	color:white;
+}
+#progressbarg{
+  width:900px;
+  padding:1px;
+  background-color:white;
+  border:1px solid black;
+  height:28px;
+  margin: 10px auto 10px auto;
+  text-align: center;
+  border-radius: 5px;
+}
+.indicatorg{
+  width:0px;
+  background-color:green;
+  height:28px;
+  margin:0;
+  float:left;
+}
+#chart_div{
+	width: 900px;
+	height: 500px;
+	margin: auto;
+}
+.progressbar{
+  width:100px;
+  padding:1px;
+  background-color:white;
+  border:1px solid black;
+  height:25px;
+  margin: auto;
+  text-align: center;
+  color: black;
+  border-radius: 5px;
+}
+.indicator{
+  width:0px;
+  background: -webkit-gradient(linear, left top, left bottom, 
+  				from(#4F4), to(#AFA));
+  height:25px;
+  margin:0;
+  border-radius: 5px;
+  color: black;
+  font: 14px Arial;
+}
+#gameover{
+	color: white;
+	font: 18px Arial;
+ 	text-align:center;
+}
