@@ -258,6 +258,7 @@ app.get('/risk', function (request, response) {
 	//console.log("API: "+request.url);
 });
 //Check every 10 minutes
+setTimeout(queryTinyArm, 2000);
 setInterval(queryTinyArm, 10*60*1000);
 //Launch app
 app.listen(80);
