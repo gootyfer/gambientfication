@@ -130,8 +130,15 @@ var queryTinyArm = function(){
 			});
 			res.on('end', function(){
 				//console.log('RESPONSE: ' + textResponse);
-				var response = JSON.parse(textResponse);
-				var activities = response.items;
+				var response, activities;
+				try{
+					response = JSON.parse(textResponse);
+					activities = response.items;
+				}catch(error){
+					console.log(error);
+					return;
+				}
+
 				activities.forEach(function(activity){
 					var record = {};
 					record.action = activity.verb;
