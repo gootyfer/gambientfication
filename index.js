@@ -72,7 +72,7 @@ var serve_http = function(request, response){
 			
     }
     
-    path.exists(filePath, function(exists) {
+    fs.exists(filePath, function(exists) {
     	if (exists) {
             fs.readFile(filePath, function(error, content) {
                 if (error) {
@@ -259,7 +259,6 @@ app.get('/risk', function (request, response) {
 });
 //Check every 10 minutes
 setInterval(queryTinyArm, 10*60*1000);
-setTimeout(queryTinyArm, 2000);
 //Launch app
 app.listen(80);
 console.log('Server running...');
