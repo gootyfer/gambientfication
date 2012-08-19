@@ -55,7 +55,7 @@ function newGame(callback){
   var game = {};
   //Load constant data
   game.users = require('./data/users.json');
-  continents = require('./data/continents.json').continents;
+  continents = require('./data/continents.json');
 
   //Randomly choose a new game
   //var gameNumber = Math.floor(5*Math.random());
