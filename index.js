@@ -253,6 +253,9 @@ app.get('/*.json', function (request, response) {
 	serve_http(request, response);
 	//console.log("JSON: "+request.url);
 });
+app.get('/*.png', function (request, response) {
+	serve_http(request, response);
+});
 app.get('/notification', function (request, response) {
 	processNotification(request, response);
 });
