@@ -15,8 +15,8 @@
 			}
 			//TODO: show info onload
 			function loadRef(){
-				document.getElementById("frame").src = refs[(i++)%3]+querystring;
-				console.log("showing... "+refs[i%3]);
+				document.getElementById("frame").src = refs[(i++)%refs.length]+querystring;
+				console.log("showing... "+refs[i%refs.length]);
 			}
 		</script>
 	</head>
