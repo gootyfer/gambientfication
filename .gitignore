@@ -1,7 +1,6 @@
-
+node_modules
 .DS_Store
 test
-data
 proc
 gambientfication.sublime-project
 gambientfication.sublime-workspace

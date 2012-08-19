@@ -6,12 +6,16 @@
 		<title>GambientFication</title>
 		<link rel="stylesheet" type="text/css" href="index.css">
 		<script type="text/javascript">
-			var refs = ["hangman.html", "risk.html", "chart.html"];
+			var refs = ["hangman.html", "risk.html", "chart.html", "chart2.html", "http://2.atinyarm.appspot.com/publicStream.jsp"];
 			var i = 0;
-			//loadRef();
-			setInterval(loadRef, 10000);
+			var querystring = window.location.href.substring(window.location.href.indexOf('?'));
+			window.onload = function(){
+				loadRef();
+				setInterval(loadRef, 60*1000);
+			}
+			//TODO: show info onload
 			function loadRef(){
-				document.getElementById("frame").src = refs[(i++)%3];
+				document.getElementById("frame").src = refs[(i++)%3]+querystring;
 				console.log("showing... "+refs[i%3]);
 			}
 		</script>

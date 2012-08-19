@@ -18,9 +18,8 @@ img{
 	margin: auto; 
 	padding: 8px;
 }
-h4{
-	text-align:center; 
-	color:white;
+h5{
+	font: 24px Verdana;
 }
 #progressbarg{
   width:900px;
@@ -57,8 +56,6 @@ h4{
 }
 .indicator{
   width:0px;
-  background: -webkit-gradient(linear, left top, left bottom, 
-  				from(#4F4), to(#AFA));
   height:25px;
   margin:0;
   border-radius: 5px;
@@ -68,5 +65,36 @@ h4{
 #gameover{
 	color: white;
 	font: 18px Arial;
- 	text-align:center;
+ 	text-align: center;
+}
+#daysleft{
+  position:absolute;
+  width:200px;
+  height:100px;
+  left:0;
+  top:650px;
+  text-align:center;
+  padding: 0 10px;
+  font: 18px Verdana;
+  line-height:100px;
+  background-color: gold;
+  color: white;
+}
+#outer{
+  display: table;
+  width: 100%;
+  overflow: hidden;
+}
+#endOfGame{
+  position:absolute;
+  width:600px;
+  height:300px;
+  left:200px;
+  top:225px;
+  text-align:center;
+  padding: 0 10px;
+  font: 18px Verdana;
+  background-color: dimgrey;
+  color: white;
+  overflow: hidden;
 }

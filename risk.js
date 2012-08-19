@@ -57,8 +57,8 @@ function firstDraw(){
   }
   //Create div for country names, after drawing all user info
   for(var i=0; i<users.length; i++){
-    $("body").append("<div id='userCountry"+i+"' style='position:absolute;width:125px;height:25px;left:"+
-      ($("#userInfo"+i)[0].offsetLeft)+"px;top:128px;text-align:center;font: 12px Verdana;'></div>");
+    $("body").append("<div id='userCountry"+i+"' style='position:absolute;width:100px;height:20px;left:"+
+      ($("#userInfo"+i)[0].offsetLeft)+"px;top:127px;text-align:center; padding: 0 10px;font: 14px Verdana;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;'></div>");
   }
   redrawAll();
 }
@@ -129,20 +129,23 @@ function newGame(callback){
 
 function loadInitialState(newGame, callback){
   //Initial state
-  var until = new Date().toISOString().substring(0,10);
+  //var until = new Date().toISOString().substring(0,10);
   var from = new Date();
   from = new Date (from.getFullYear(), from.getMonth());
-  from = from.toISOString().substring(0,10);
+  //from = from.toISOString().substring(0,10);
+  var end = new Date();
+  end = new Date (end.getFullYear(), end.getMonth()+1, 0);
+  var ONE_DAY = 1000 * 60 * 60 * 24;
+  var daysLeft = Math.floor((end - (new Date()))/ONE_DAY);
+  $("body").append("<div id='daysLeft'>"+daysLeft+" DAYS LEFT</div>");
   var usersUpdated = 0;
   var newActivities = {};
   users.forEach(function(user){
       newActivities[user.id] = {read:0,skimmed:0,suggested:0};
-      $.getJSON('http://3.atinyarm.appspot.com/api/activities/jsonp?userKey='+
-      user.key+'&from='+from+'&until='+until+'&page=all&callback=?',
-      function(activities_obj){
-        var activities = activities_obj.items;
+      $.getJSON('/api/activities/?userKey='+user.key+'&from='+from.getTime(),
+      function(activities){
         activities.forEach(function(activity){
-            switch(activity.verb){
+            switch(activity.action){
                 case 'read':
                     newActivities[user.id].read +=1;
                     if(newGame || newActivities[user.id].read > user.read){
@@ -194,7 +197,11 @@ function redrawUsersInfo(){
 }
 
 function drawTotalProgress(userId){
-  var width = Math.floor(users[userId].conquered*900/continents[game].area);
+  var usersProgress = 0;
+  for(var i=0;i<users.length;i++){
+    usersProgress+=users[i].conquered;
+  }
+  var width = Math.floor(users[userId].conquered*900/usersProgress);
   $("#progressbarg").append("<div class='indicatorg' style='background-color:"+users[userId].color+
     ";width:"+width+";'></div>");
 }
@@ -212,9 +219,9 @@ function getUserInfo(userId){
     }
     var countryToConquer = regionToConquer.countries[i];
     var conquer_progress = Math.round(100*users[userId].points/countryToConquer.area);
-    if(conquer_progress>100) conquer_progress=100;
-    var progress = '<div class="progressbar"><div class="indicator" style="background-color:'+
-      users[userId].color+';width:'+(conquer_progress)+';"></div></div>';
+    if(conquer_progress>95) conquer_progress=95;
+    var progress = '<div class="progressbar"><div class="indicator" style="background: -webkit-gradient(linear, left top, left bottom, from('+
+      users[userId].color+'), to(white));width:'+(conquer_progress)+';"></div></div>';
     countryName = countryToConquer.name;
   }
   //TODO: show reads count per participant + in total
@@ -283,6 +290,18 @@ function gameOver(){
   localStorage.removeItem("arr_data");
   localStorage.removeItem("conquered_countries");
   localStorage.removeItem("game");
+  //Display final info
+  var read = 0;
+  var skimmed = 0;
+  var suggested = 0;
+  for(var i=0;i<users.length;i++){
+    read+=users[i].read;
+    skimmed+=users[i].skimmed;
+    suggested+=users[i].suggested;
+  }
+  $("body").append("<div id='endOfGame'><h5>GAME OVER</h5>Congratulations! You completed the quest!!<br><br>To conquer the continent, your group...<br>...read "+read+
+    " papers<br>...skimmed "+skimmed+" papers<br>...suggested "+suggested+
+    " papers<br><br> A new game will start in 24 hours. Good luck!</div>");
 }
 
  //Find next country

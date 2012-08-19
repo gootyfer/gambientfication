@@ -26,22 +26,20 @@ $(function() {
 });
 
 function loadPreviousData(callback){
-    var until = new Date().toISOString().substring(0,10);
+    //var until = new Date().toISOString().substring(0,10);
     var from = new Date();
-    from.setDate(from.getDate()-14);
-    from = from.toISOString().substring(0,10);
+    from.setDate(from.getDate()-10);
+    //from = from.toISOString().substring(0,10);
     var usersUpdated = 0;
     users.forEach(function(user){
         user.read = 0;
         user.skimmed = 0;
         user.suggested = 0;
         user.points = 0;
-        $.getJSON('http://3.atinyarm.appspot.com/api/activities/jsonp?userKey='+
-        user.key+'&from='+from+'&until='+until+'&page=all&callback=?',
-        function(activities_obj){
-            var activities = activities_obj.items;
+        $.getJSON('/api/activities?userKey='+user.key+'&from='+from.getTime(),
+        function(activities){
             activities.forEach(function(activity){
-                switch(activity.verb){
+                switch(activity.action){
                     case 'read':
                         user.read +=1;
                         user.points +=1;
@@ -78,7 +76,7 @@ function redrawHangmen(){
     reorderUsers();
     for(var i=0; i<users.length; i++) {
         drawHangman(positions[i].posx, positions[i].posy, 8 - Math.floor(users[i].points), 
-        users[i].image, users[i].read, users[i].skimmed, users[i].suggested);
+        users[i].image, users[i].read, users[i].skimmed, users[i].suggested, i);
 
         //TODO: remove testing
         // divs for testing
@@ -88,10 +86,10 @@ function redrawHangmen(){
 }
 
 // Draw the canvas
-function drawHangman(posx, posy, badGuesses, image, read, skimmed, suggested) {
+function drawHangman(posx, posy, badGuesses, image, read, skimmed, suggested, pos) {
     ctx.font      = "bold 14px Verdana";
     ctx.fillStyle = "#000000";
-    ctx.fillText("Last week", posx+35, posy+250);
+    ctx.fillText("Last 10 days", posx+35, posy+250);
     ctx.font      = "normal 14px Verdana";
     ctx.fillText("Read: "+read, posx+35, posy+280);
     ctx.fillText("Skimmed: "+skimmed, posx+35, posy+300);
@@ -106,8 +104,18 @@ function drawHangman(posx, posy, badGuesses, image, read, skimmed, suggested) {
     drawLine(ctx, [posx+10,posy+340], [posx+240,posy+340]);
 
     // draw head
+    if(badGuesses >7){
+        ctx.globalAlpha = 0.4;
+    }
     ctx.drawImage(image, posx+120, posy+50, 100, 100);
+    ctx.globalAlpha = 1.0;
+      
     ctx.strokeStyle = 'black';
+    if(badGuesses < 8){
+        if(pos==0) ctx.strokeStyle = '#D4A017';
+        if(pos==1) ctx.strokeStyle = '#C0C0C0';
+        if(pos==2) ctx.strokeStyle = '#b4593a';
+    }
     ctx.lineWidth = 20;
     ctx.beginPath();
     ctx.moveTo(posx+230, posy+100);
@@ -124,16 +132,20 @@ function drawHangman(posx, posy, badGuesses, image, read, skimmed, suggested) {
             // create the arm of the gallows
             ctx.lineTo(posx+190,posy+10);
             ctx.stroke();
+            ctx.lineWidth = 10;
+            drawLine(ctx, [posx+20,posy+80], [posx+80,posy+15]);
         }
         if (badGuesses > 2) {
-            ctx.strokeStyle = 'black';
+            ctx.strokeStyle = '#b58c30';
             ctx.lineWidth = 6;
             // draw rope
-            drawLine(ctx, [posx+170,posy+20], [posx+170,posy+50]);
+            drawLine(ctx, [posx+170,posy+20], [posx+170,posy+30]);
+            drawLine(ctx, [posx+160,posy+173], [posx+180,posy+173]);
         }
         if (badGuesses > 3) {
+            ctx.strokeStyle = 'black';
             // draw body
-            drawLine(ctx, [posx+170,posy+170], [posx+170,posy+240]);
+            drawLine(ctx, [posx+170,posy+176], [posx+170,posy+240]);
         }
         if (badGuesses > 4) {
             // draw left arm
