@@ -3,7 +3,7 @@ var users = [];
 $(function() {
 	$.getJSON('data/users.json', function(users_info) {
 		users = users_info;
-        console.log(JSON.stringify(users));
+        //console.log(JSON.stringify(users));
 
         loadPreviousData(function(data){
         	drawChart(data);
@@ -37,9 +37,11 @@ function loadPreviousData(callback){
         $.getJSON('/api/activities?userKey='+user.key+'&from='+from.getTime(),
         function(activities){
             activities.forEach(function(activity){
-                var ak_key = new Date(parseInt(activity.date.substring(0,4)), parseInt(activity.date.substring(5,7)));
+                var arr = activity.date.split(/[^0-9]/);
+                var ak_key = (new Date(arr[0], arr[1]-1, 1)).getTime();
+                //var ak_key = new Date(parseInt(activity.date.substring(0,4)), parseInt(activity.date.substring(5,7))-1);
                 //var ak_key = Date.parse(activity.date.substring(0,8)+"01"+activity.date.substring(10));
-                //console.log(ak_key);
+                //console.log(activity.date+" CONVERTED TO "+ak_key);
                 //console.log(activity.date.substring(0,7));
                 if(!dataTotal[ak_key]) dataTotal[ak_key] = 0;
                 if(!dataRead[ak_key]) dataRead[ak_key] = 0;
@@ -85,6 +87,7 @@ function loadPreviousData(callback){
 }
 
 function drawChart(data) {
+    //console.log(JSON.stringify(data));
 	chart = new Highcharts.Chart({
             chart: {
                 renderTo: 'container'
