@@ -93,22 +93,31 @@ var serve_http = function(request, response){
 var processNotification = function(request, response){
 	//Parse parameters
 	var record = querystring.parse(url.parse(request.url).query);
-	record.date = new Date(record.date);
-	console.log(JSON.stringify(record));
-	response.writeHead(200);
-    response.end();
+	record.date = new Date(parseInt(record.date));
+	//console.log(JSON.stringify(record));
+	//response.writeHead(200);
+    //response.end();
 	//Save to database
-	//TODO:parse date
-	// activityManager.save(record, function(error, events){
-	// 	if(error){
-	// 		console.log(error);
-	// 		response.writeHead(500);
- //            response.end();
-	// 	}
-	// 	newRiskEvent(events[0].userKey, events[0].action);
-	// 	response.writeHead(200);
- //    	response.end();
-	// });
+	activityManager.find(record, function(error, results){
+		if(results.length==0){
+			activityManager.save(record, function(error, events){
+				if(error){
+					console.log(error);
+					response.writeHead(500);
+		            response.end();
+		            return;
+				}
+				console.log("SAVED "+JSON.stringify(record));
+				response.writeHead(200);
+		    	response.end();
+				newRiskEvent(record.userKey, record.action);
+			});
+		}else{
+			console.log("NOT SAVED "+JSON.stringify(record));
+			response.writeHead(400);
+            response.end();
+		}
+	});
 }
 
 //OR query tinyarm data (1 requests/10 mins = 6/h = 144/día)
