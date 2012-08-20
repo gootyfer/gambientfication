@@ -17,11 +17,8 @@
 					users.forEach(function(user){
 						userHTML += "<li> <a href='index.html?userKey="+user.key+"'>"+user.googlePlusDisplayName+"</a></li>";
 					});
-					for(var i=0; i<users.length;i++){
-
-					}
 					userHTML += "</ul></div>"
-					$("#frame").replaceWith();
+					$("#frame").replaceWith(userHTML);
 				});
 			}else{
 				var querystring = window.location.href.substring(questionIndex);
