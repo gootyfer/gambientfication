@@ -37,7 +37,8 @@ function loadPreviousData(callback){
         $.getJSON('/api/activities?userKey='+user.key+'&from='+from.getTime(),
         function(activities){
             activities.forEach(function(activity){
-                var ak_key = Date.parse(activity.date.substring(0,8)+"01"+activity.date.substring(10));
+                var ak_key = new Date(parseInt(activity.date.substring(0,4)), parseInt(activity.date.substring(5,7)));
+                //var ak_key = Date.parse(activity.date.substring(0,8)+"01"+activity.date.substring(10));
                 //console.log(ak_key);
                 //console.log(activity.date.substring(0,7));
                 if(!dataTotal[ak_key]) dataTotal[ak_key] = 0;
