@@ -93,6 +93,7 @@ var serve_http = function(request, response){
 var processNotification = function(request, response){
 	//Parse parameters
 	var record = querystring.parse(url.parse(request.url).query);
+	record.date = new Date(record.date);
 	console.log(JSON.stringify(record));
 	response.writeHead(200);
     response.end();
@@ -276,8 +277,8 @@ app.get('/risk', function (request, response) {
 	//console.log("API: "+request.url);
 });
 //Check every 10 minutes
-setTimeout(queryTinyArm, 2000);
-setInterval(queryTinyArm, 10*60*1000);
+//setTimeout(queryTinyArm, 2000);
+//setInterval(queryTinyArm, 10*60*1000);
 //Launch app
 app.listen(80);
 console.log('Server running...');
