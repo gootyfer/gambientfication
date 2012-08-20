@@ -57,9 +57,9 @@ function newGame(callback){
   game.users = require('./data/users.json');
   continents = require('./data/continents.json').continents;
 
-  //TODO: Randomly choose a new game
-  //var gameNumber = Math.floor(5*Math.random());
-  var gameNumber = 0;
+  //Randomly choose a new game
+  var gameNumber = Math.floor(5*Math.random());
+  //var gameNumber = 0;
   game.continent = continents[gameNumber];
 
   //Shuffle regions and users
@@ -163,7 +163,6 @@ function loadInitialState(object, callback){
 
 function gameOver(){
   //TODO: Log final info
-  //TODO: setTimeout en 24h
 }
 
 //Try to conquer current country
