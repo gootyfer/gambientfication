@@ -93,12 +93,20 @@ var serve_http = function(request, response){
 var processNotification = function(request, response){
 	//Parse parameters
 	var record = querystring.parse(url.parse(request.url).query);
+	console.log(JSON.stringify(record));
+	response.writeHead(200);
+    response.end();
 	//Save to database
+	//TODO:parse date
 	activityManager.save(record, function(error, events){
 		if(error){
 			console.log(error);
+			response.writeHead(500);
+            response.end();
 		}
 		newRiskEvent(events[0].userKey, events[0].action);
+		response.writeHead(200);
+    	response.end();
 	});
 }
 
