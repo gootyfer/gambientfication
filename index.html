@@ -6,18 +6,35 @@
 		<link rel="apple-touch-icon" href="logo.png"/>
 		<title>GambientFier</title>
 		<link rel="stylesheet" type="text/css" href="index.css">
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 		<script type="text/javascript">
 			var refs = ["hangman.html", "risk.html", "chart.html", "chart2.html", "http://2.atinyarm.appspot.com/publicStream.jsp"];
-			var i = 0;
-			var querystring = window.location.href.substring(window.location.href.indexOf('?'));
-			window.onload = function(){
-				loadRef();
-				setInterval(loadRef, 60*1000);
+			var screenIndex = 0;
+			var questionIndex = window.location.href.indexOf('?');
+			if(questionIndex == -1){
+				$.getJSON('data/users.json', function(users) {
+					var userHTML = "<div style='height:750px; width:999px;position:absolute;top:0;left:0;'><ul>";
+					users.forEach(function(user){
+						userHTML += "<li> <a href='index.html?userKey="+user.key+"'>"+user.googlePlusDisplayName+"</a></li>";
+					});
+					for(var i=0; i<users.length;i++){
+
+					}
+					userHTML += "</ul></div>"
+					$("#frame").replaceWith();
+				});
+			}else{
+				var querystring = window.location.href.substring(questionIndex);
+				$(function(){
+					loadRef();
+					setInterval(loadRef, 60*1000);
+				});
 			}
+			
 			//TODO: show info onload
 			function loadRef(){
-				document.getElementById("frame").src = refs[(i++)%refs.length]+querystring;
-				console.log("showing... "+refs[i%refs.length]);
+				document.getElementById("frame").src = refs[(screenIndex++)%refs.length]+querystring;
+				console.log("showing... "+refs[screenIndex%refs.length]);
 			}
 		</script>
 	</head>

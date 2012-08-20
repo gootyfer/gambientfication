@@ -10,3 +10,12 @@ body, iframe, div{
 	width: 999px;
 	height: 750px;
 }
+
+ul{
+	list-style-type: none;
+}
+
+ul li{
+	font: 20px Verdana;
+	line-height: 2em;
+}
