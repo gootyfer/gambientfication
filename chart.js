@@ -34,10 +34,6 @@ function loadPreviousData(callback){
     //from = from.toISOString().substring(0,10);
     var usersUpdated = 0;
     users.forEach(function(user){
-        user.read = 0;
-        user.skimmed = 0;
-        user.suggested = 0;
-        user.points = 0;
         $.getJSON('/api/activities?userKey='+user.key+'&from='+from.getTime(),
         function(activities){
             activities.forEach(function(activity){

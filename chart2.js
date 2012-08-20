@@ -1,8 +1,9 @@
 var users = [];
-var server = 'http://3.atinyarm.appspot.com';
+//var server = 'http://3.atinyarm.appspot.com';
 $(function() {
 	$.getJSON('data/users.json', function(users_info) {
 		users = users_info;
+        console.log(JSON.stringify(users));
 
         loadPreviousData(function(data){
         	drawChart(data);
@@ -33,15 +34,11 @@ function loadPreviousData(callback){
     //from = from.toISOString().substring(0,10);
     var usersUpdated = 0;
     users.forEach(function(user){
-        user.read = 0;
-        user.skimmed = 0;
-        user.suggested = 0;
-        user.points = 0;
         $.getJSON('/api/activities?userKey='+user.key+'&from='+from.getTime(),
         function(activities){
             activities.forEach(function(activity){
-                var ak_key = Date.parse(activity.date.substring(0,7));
-                //console.log(activity.date);
+                var ak_key = Date.parse(activity.date.substring(0,8)+"01"+activity.date.substring(10));
+                //console.log(ak_key);
                 //console.log(activity.date.substring(0,7));
                 if(!dataTotal[ak_key]) dataTotal[ak_key] = 0;
                 if(!dataRead[ak_key]) dataRead[ak_key] = 0;
