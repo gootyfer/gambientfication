@@ -98,16 +98,16 @@ var processNotification = function(request, response){
     response.end();
 	//Save to database
 	//TODO:parse date
-	activityManager.save(record, function(error, events){
-		if(error){
-			console.log(error);
-			response.writeHead(500);
-            response.end();
-		}
-		newRiskEvent(events[0].userKey, events[0].action);
-		response.writeHead(200);
-    	response.end();
-	});
+	// activityManager.save(record, function(error, events){
+	// 	if(error){
+	// 		console.log(error);
+	// 		response.writeHead(500);
+ //            response.end();
+	// 	}
+	// 	newRiskEvent(events[0].userKey, events[0].action);
+	// 	response.writeHead(200);
+ //    	response.end();
+	// });
 }
 
 //OR query tinyarm data (1 requests/10 mins = 6/h = 144/día)
