@@ -17,7 +17,7 @@ getData = function(callback) {
     }else{
       if(results.length>0){
         var endDate = results[0].gameData.endDate;
-        console.log("end date:"+endDate);
+        //console.log("end date:"+endDate);
         //console.log("end date:"+(typeof endDate));
         //endDate = new Date(endDate);
         if(new Date() > endDate){//New game
