@@ -1,0 +1,29 @@
+#chart {
+  font: 10px sans-serif;
+}
+
+.chord path {
+  fill-opacity: .67;
+  stroke: #000;
+  stroke-width: .5px;
+}
+
+#users_div{
+	width: 500px;
+//	height: 150px;
+//	margin: auto;
+	display: inline-block;
+	vertical-align: top;
+	margin: 150px 0;
+}
+.userInfo{
+	float:left;
+	width:120px;
+	height: 150px;
+	border-radius: 8px; 
+}
+img{
+	display:block; 
+	margin: auto; 
+	padding: 8px;
+}

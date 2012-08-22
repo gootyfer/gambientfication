@@ -220,6 +220,7 @@ var getData = function(request, response){
 				response.writeHead(500);
                 response.end();
                 console.log("error in request");
+                return;
 			}
 			//console.log(results);
 			response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -236,12 +237,64 @@ var getRiskData = function(request, response){
 				response.writeHead(500);
                 response.end();
                 console.log("error in request");
+                return;
 			}
 			//console.log(results);
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 	        response.end(JSON.stringify(results.gameData), 'utf-8');
 	});
 }
+
+function zeros(dimensions) {
+    var array = [];
+
+    for (var i = 0; i < dimensions[0]; ++i) {
+        array.push(dimensions.length == 1 ? 0 : zeros(dimensions.slice(1)));
+    }
+
+    return array;
+}
+
+var getChordData = function(request, response){
+	var users = require('./data/users.json');
+	var userKeys = [];
+	users.forEach(function(user){
+		userKeys.push(user.key);
+	});
+	var query = {"action":"suggested", "userKey":{"$in":userKeys}, "targetKey":{"$in":userKeys}};
+	activityManager.find(query, function(error, suggestedActions){
+		if(error){
+			response.writeHead(500);
+            response.end();
+            console.log("error in request");
+            return;
+		}
+		var suggested = zeros([userKeys.length, userKeys.length]);
+		var accepted = zeros([userKeys.length, userKeys.length]);
+		var suggestionsChecked = 0;
+		suggestedActions.forEach(function(suggestion){
+			var origin = userKeys.indexOf(suggestion.userKey);
+			var target = userKeys.indexOf(suggestion.targetKey);
+			suggested[origin][target] += 1;
+			var query = {"action":{"$in":["read","skimmed"]}, userKey: suggestion.targetKey, paperKey: suggestion.paperKey};
+			activityManager.find(query, function(error, acceptedSuggestion){
+				if(acceptedSuggestion.length>0){
+					var origin = userKeys.indexOf(suggestion.userKey);
+					var target = userKeys.indexOf(suggestion.targetKey);
+					accepted[target][origin] += 1;
+					//accepted.push(acceptedSuggestion[0]);
+				}
+				suggestionsChecked++;
+				if(suggestionsChecked==suggestedActions.length){
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+        			response.end(JSON.stringify({"suggested":suggested, "accepted":accepted}), 'utf-8');
+				}
+			});
+		});
+	});
+}
+
+
 
 //Router
 app.get('/*.html', function (request, response) {
@@ -283,6 +336,10 @@ app.get('/api/activities', function (request, response) {
 });
 app.get('/risk', function (request, response) {
 	getRiskData(request, response);
+	//console.log("API: "+request.url);
+});
+app.get('/chord', function (request, response) {
+	getChordData(request, response);
 	//console.log("API: "+request.url);
 });
 //Check every 10 minutes
