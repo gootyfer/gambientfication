@@ -9,12 +9,12 @@
 }
 
 #users_div{
-	width: 500px;
+	width: 300px;
 //	height: 150px;
 //	margin: auto;
 	display: inline-block;
 	vertical-align: top;
-	margin: 150px 0;
+	margin: 0;
 }
 .userInfo{
 	float:left;
