@@ -65,6 +65,9 @@ function loadPreviousData(callback){
 
 function reorderUsers(){
   users.sort(function(a,b){
+    if (b.points == a.points){
+        return b.skimmed - a.skimmed;
+    }
     return b.points - a.points;
   });
 }
@@ -75,7 +78,7 @@ function redrawHangmen(){
 
     reorderUsers();
     for(var i=0; i<users.length; i++) {
-        drawHangman(positions[i].posx, positions[i].posy, 8 - Math.floor(users[i].points), 
+        drawHangman(positions[i].posx, positions[i].posy, 8 - users[i].points, 
         users[i].image, users[i].read, users[i].skimmed, users[i].suggested, i);
 
         //TODO: remove testing
@@ -104,7 +107,7 @@ function drawHangman(posx, posy, badGuesses, image, read, skimmed, suggested, po
     drawLine(ctx, [posx+10,posy+340], [posx+240,posy+340]);
 
     // draw head
-    if(badGuesses >7){
+    if(badGuesses >7.5){
         ctx.globalAlpha = 0.4;
     }
     ctx.drawImage(image, posx+120, posy+50, 100, 100);
