@@ -125,11 +125,20 @@ d3.json("data/users.json", function(users){
       return function(g, i) {
         svg.selectAll("g.chord path")
             .filter(function(d) {
-              var filt = d.source.index != i && d.target.index != i;
+              var filt_index = i%2==1?1:-1;
+              var filt = (d.source.index != i && d.target.index != i) && (d.source.index+filt_index != i && d.target.index+filt_index != i);
               if(img) filt = (d.source.index != 2*i && d.target.index != 2*i) && (d.source.index != 2*i+1 && d.target.index != 2*i+1);
               return filt;
             })
           .transition()
+            .style("opacity", opacity);
+        d3.select("#users_div").selectAll("span")
+            .filter(function(d, index) {
+              var filt = index != i;
+              if(!img) filt = (2*index != i && 2*index+1 != i);
+              return filt;
+            })
+            .transition()
             .style("opacity", opacity);
       };
     }

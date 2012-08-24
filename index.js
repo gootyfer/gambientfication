@@ -336,11 +336,9 @@ app.get('/api/activities', function (request, response) {
 });
 app.get('/risk', function (request, response) {
 	getRiskData(request, response);
-	//console.log("API: "+request.url);
 });
 app.get('/chord', function (request, response) {
 	getChordData(request, response);
-	//console.log("API: "+request.url);
 });
 //Check every 10 minutes
 //setTimeout(queryTinyArm, 2000);
