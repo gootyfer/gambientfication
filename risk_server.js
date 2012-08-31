@@ -26,9 +26,9 @@ getData = function(callback) {
             callback(null, data);
           });
         }else{
-          //var gameOverDate = new Date(endDate.getTime());
-          //gameOverDate.setDate(gameOverDate.getDate());
-          if(new Date() >  endDate){
+          var gameOverDate = new Date(endDate.getTime());
+          gameOverDate.setDate(gameOverDate.getDate()-1);
+          if(new Date() >  gameOverDate){
             results[0].gameData.gameOver = true;
             results[0].gameData.win = false;
             gameOver();
@@ -109,7 +109,7 @@ function newGame(callback){
       }
     }
     var now = new Date();
-    game.endDate = new Date (now.getFullYear(), now.getMonth()+1, 0);
+    game.endDate = new Date (now.getFullYear(), now.getMonth()+1, 1);
     //Update game data
     gameManager.update(object._id, object.gameData, function(){
       callback(object);
