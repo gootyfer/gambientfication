@@ -110,7 +110,7 @@ function newGame(callback){
     var now = new Date();
     game.endDate = new Date (now.getFullYear(), now.getMonth()+1, 0);
     //Update game data
-    gameManager.update(object._id, object.game, function(){
+    gameManager.update(object._id, object.gameData, function(){
       callback(object);
     });
   });
