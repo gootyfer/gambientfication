@@ -26,12 +26,13 @@ getData = function(callback) {
             callback(null, data);
           });
         }else{
-          var gameOverDate = new Date(endDate.getTime());
-          gameOverDate.setDate(gameOverDate.getDate()-1);
-          if(new Date() >  gameOverDate){
+          //var gameOverDate = new Date(endDate.getTime());
+          //gameOverDate.setDate(gameOverDate.getDate());
+          if(new Date() >  endDate){
             results[0].gameData.gameOver = true;
+            results[0].gameData.win = false;
             gameOver();
-            console.log("GAME OVER: "+(new Date())+" (today) is higher than (previous day to end of game) "+gameOverDate);
+            //console.log("GAME OVER: "+(new Date())+" (today) is higher than (previous day to end of game) "+gameOverDate);
           }
           callback(null, results[0]);
         }
@@ -59,7 +60,7 @@ function newGame(callback){
 
   //Randomly choose a new game
   var gameNumber = Math.floor(5*Math.random());
-  //var gameNumber = 0;
+  gameNumber = 1;
   game.continent = continents[gameNumber];
 
   //Shuffle regions and users
@@ -208,6 +209,7 @@ function conquer(object, userId){
             console.log("GAME OVER: no more countries");
             game.gameOver=true;
             //game.endDate = new Date();
+            game.win = true;
             gameOver();
             return;
           }

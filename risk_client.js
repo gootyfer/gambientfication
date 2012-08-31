@@ -119,7 +119,8 @@ function gameOver(game){
     skimmed+=game.users[i].skimmed;
     suggested+=game.users[i].suggested;
   }
-  $("body").append("<div id='endOfGame'><h5>GAME OVER</h5>The game finished with a parcial conquer of the continent. Try harder next time!!<br><br>To conquer the continent, your group...<br>...read "+read+
+  var textWin = game.win?"The game finished with a total conquer of the continent. Congratulations!!":"The game finished with a parcial conquer of the continent. Try harder next time!!";
+  $("body").append("<div id='endOfGame'><h5>GAME OVER</h5>"+textWin+"<br><br>To conquer the continent, your group...<br>...read "+read+
     " papers<br>...skimmed "+skimmed+" papers<br>...suggested "+suggested+
     " papers<br><br> A new game will start in 24 hours. Good luck!</div>");
 }
