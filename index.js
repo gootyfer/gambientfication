@@ -229,10 +229,10 @@ var getData = function(request, response){
 	}
 }
 
-var getRiskData = function(request, response){
+var getRiskData = function(request, response, group){
 	//Use server Risk and be able to return state: users, countries, init
 	//Load new Game in the first request
-	getNewRiskData(function(error, results){
+	getNewRiskData(group, function(error, results){
 		if(error){
 				response.writeHead(500);
                 response.end();
@@ -335,7 +335,9 @@ app.get('/api/activities', function (request, response) {
 	//console.log("API: "+request.url);
 });
 app.get('/risk', function (request, response) {
-	getRiskData(request, response);
+	var my_url = url.parse(request.url);
+	var params = querystring.parse(my_url.query); 
+	getRiskData(request, response, params['group']);
 });
 app.get('/chord', function (request, response) {
 	getChordData(request, response);

@@ -1,3 +1,8 @@
+var questionIndex = window.location.href.indexOf('?');
+var querystring = window.location.href.substring(questionIndex);
+var arrayParams = querystring.split("&");
+var groupArray = arrayParams[1].split("=");
+var group = groupArray[1];
 //Constant data
 var chart;
 var options = {
@@ -10,7 +15,7 @@ var options = {
 };
 
 $(function() {
-  $.getJSON('risk', function(game) {
+  $.getJSON('risk?group='+group, function(game) {
   	//console.log(JSON.stringify(game));
   	firstDraw(game);
   });

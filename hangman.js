@@ -1,3 +1,9 @@
+var questionIndex = window.location.href.indexOf('?');
+var querystring = window.location.href.substring(questionIndex);
+var arrayParams = querystring.split("&");
+var groupArray = arrayParams[1].split("=");
+var group = groupArray[1];
+
 var canvas = document.getElementById("my_canvas");
 var ctx = canvas.getContext('2d');
 var users = [];
@@ -13,7 +19,7 @@ var positions = [
 ];
 
 $(function() {
-    $.getJSON('data/users.json', function(users_info) {
+    $.getJSON('data/'+group+'.json', function(users_info) {
         users = users_info;
 
         loadPreviousData(function(){

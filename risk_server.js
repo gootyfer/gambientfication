@@ -10,8 +10,12 @@ var activityManager = new ActivityManager('localhost', 27017);
 //Constant data
 var pointsPower = 500000;
 
-getData = function(callback) {
-  gameManager.findLast(function(error, results){
+getData = function(group, callback) {
+  if(!group){
+    callback("error: group should not be null!");
+    return;
+  }
+  gameManager.findLast(group, function(error, results){
     if(error){
       callback(error);
     }else{
@@ -22,7 +26,7 @@ getData = function(callback) {
         //endDate = new Date(endDate);
         if(new Date() > endDate){//New game
           console.log("Creating NEW GAME...");
-          newGame(function(data){
+          newGame(group, function(data){
             callback(null, data);
           });
         }else{
@@ -37,7 +41,7 @@ getData = function(callback) {
           callback(null, results[0]);
         }
       }else{ //First game for the group
-        newGame(function(data){
+        newGame(group, function(data){
           loadInitialState(data, function(){
             callback(null, data);
           });
@@ -52,15 +56,15 @@ function shuffle (o){
   return o;
 };
 
-function newGame(callback){
+function newGame(group, callback){
   var game = {};
   //Load constant data
-  game.users = require('./data/users.json');
+  game.users = require('./data/'+group+'.json');
   continents = require('./data/continents.json').continents;
 
   //Randomly choose a new game
   var gameNumber = Math.floor(5*Math.random());
-  gameNumber = 1;
+  //gameNumber = 1;
   game.continent = continents[gameNumber];
 
   //Shuffle regions and users
@@ -68,7 +72,7 @@ function newGame(callback){
   shuffle(game.users);
 
   //Save game to create an id
-  gameManager.save({groupKey: "ariadne", gameData: game}, function(error, object){
+  gameManager.save({group: group, gameData: game}, function(error, object){
     game = object.gameData;
     //Assign regions to users
     for(var i=0; i<game.users.length; i++){
@@ -110,6 +114,8 @@ function newGame(callback){
     }
     var now = new Date();
     game.endDate = new Date (now.getFullYear(), now.getMonth()+1, 1);
+    //TODO: update!
+    game.endDate = new Date (now.getFullYear(), now.getMonth()+1, 3);
     //Update game data
     gameManager.update(object._id, object.gameData, function(){
       callback(object);
@@ -285,9 +291,24 @@ function assignNewRegionToUser(object, userId){
   return false;
 }
 
+//TODO: save users and groups data in the database
+function getUserGroup(userKey){
+  var groups = ['ariadne', 'gradient', 'thesis12'];
+  for(var i=0;i<groups.length;i++){
+    var users = require('./data/'+groups[i]+'.json');
+    for(var j=0;j<users.length;j++){
+      if(users[i].key == userKey){
+        return groups[i];
+      }
+    }
+  }
+  return null;
+}
+
 newEvent = function(userKey, eventType){
+  var group = getUserGroup(userKey);
   //Load game data
-  getData(function(error, object){
+  getData(group, function(error, object){
     if(error){
       console.log(error);
       return;

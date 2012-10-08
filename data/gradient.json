@@ -1,0 +1,48 @@
+[
+    {
+        "user": "mdelmar.ps@gmail.com;gmail.com",
+        "key": "agpzfmF0aW55YXJtcg0LEgVVc2VycxiZyA8M",
+        "googlePlusImage": "https://lh5.googleusercontent.com/-la_ggY22ymM/AAAAAAAAAAI/AAAAAAAAAr0/0lY7cG-ZqP0/s250-c-k/photo.jpg",
+        "googlePlusId": "100758661834245696285",
+        "googlePlusDisplayName": "Mar Pérez-Sanagustín"
+    },
+    {
+        "user": "dleony@gmail.com;gmail.com",
+        "key": "agpzfmF0aW55YXJtcg0LEgVVc2Vycxj3kgIM",
+        "googlePlusImage": "https://lh4.googleusercontent.com/-9LcwMvZcGNY/AAAAAAAAAAI/AAAAAAAABfY/vDVwL8hiKUs/s250-c-k/photo.jpg",
+        "googlePlusId": "117955863736901583251",
+        "googlePlusDisplayName": "Derick Leony"
+    },
+    {
+        "googlePlusImage": "https://lh6.googleusercontent.com/-PArK1rUx2vQ/AAAAAAAAAAI/AAAAAAAAAAA/xIq1L9_5Jls/photo.jpg",
+        "googlePlusId": "109913170674709077796",
+        "googlePlusDisplayName": "Israel Gutiérrez",
+        "user": "gootyfer@gmail.com;gmail.com",
+        "key": "agpzfmF0aW55YXJtcg0LEgVVc2Vycxig7wIM"
+    },
+	{
+	    "user": "pedmume79@gmail.com;gmail.com",
+	    "key": "agpzfmF0aW55YXJtcg0LEgVVc2VycxjB1SIM",
+		"googlePlusDisplayName": "Pedro Muñoz",
+		"googlePlusImage": "http://www.it.uc3m.es/pedmume/images/pedro.jpg"
+
+	},
+	{
+	    "user": "mcfp.uc3m@gmail.com;gmail.com",
+	    "key": "agpzfmF0aW55YXJtcg0LEgVVc2VycxiQnyIM",
+		"googlePlusDisplayName": "M. Carmen Fernández",
+		"googlePlusImage": "http://www.emadridnet.org/master/photos/mcfp.jpg"
+	},
+	{
+	    "user": "hugoapg@gmail.com;gmail.com",
+	    "key": "agpzfmF0aW55YXJtcg0LEgVVc2VycxjXriIM",
+		"googlePlusDisplayName": "Hugo A. Parada",
+		"googlePlusImage": "http://www.it.uc3m.es/hparada/img/HAPG1.png"
+	},
+	{
+	    "user": "josejrueda@gmail.com;gmail.com",
+	    "key": "agpzfmF0aW55YXJtcg0LEgVVc2VycxiG0SEM",
+		"googlePlusDisplayName": "José J. García",
+		"googlePlusImage": "http://www.uc3m.es/portal/pls/portal/docs/10817265.JPG"
+	}
+]

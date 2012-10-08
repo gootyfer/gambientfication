@@ -89,12 +89,12 @@ RiskGameManager = function(host, port) {
 	    });
 	};
 
-	RiskGameManager.prototype.findLast = function(callback) {
+	RiskGameManager.prototype.findLast = function(group, callback) {
 		//console.log('findLastActivity: ');
 	    this.getCollection(function(error, events_collection) {
 	      if( error ) callback(error);
 	      else {
-	      	events_collection.find().sort({"timestamp":-1}).limit(1).toArray(function(error, results) {
+	      	events_collection.find({"group":group}).sort({"timestamp":-1}).limit(1).toArray(function(error, results) {
 	        	//console.log('findLastActivity: resp');
 	          if( error ) callback(error);
 	          else callback(null, results);

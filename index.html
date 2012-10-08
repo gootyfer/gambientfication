@@ -7,37 +7,49 @@
 		<title>GambientFier</title>
 		<link rel="stylesheet" type="text/css" href="index.css">
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<iframe id="frame" style="height:750px; width:999px;"></iframe>
+		<div id="layer"></div>
 		<script type="text/javascript">
-			var refs = ["hangman.html", "risk.html", "chart.html", "chart2.html", "http://atinyarm.appspot.com/publicStream.jsp"];
+			var FRAME_SECONDS = 60;
+			var groups = ["gradient", "ariadne", "thesis12"];
+			//var refs = ["hangman.html", "risk.html", "chart.html", "chart2.html", "http://atinyarm.appspot.com/publicStream.jsp"];
+			var refs = ["hangman.html", "risk.html", "risk.html", "risk.html", "http://atinyarm.appspot.com/publicStream.jsp"];
+			var params = [];
 			var screenIndex = 0;
 			var questionIndex = window.location.href.indexOf('?');
 			if(questionIndex == -1){
-				$.getJSON('data/users.json', function(users) {
-					var userHTML = "<div style='height:750px; width:999px;position:absolute;top:0;left:0;'><ul>";
-					users.forEach(function(user){
-						userHTML += "<li> <a href='index.html?userKey="+user.key+"'>"+user.googlePlusDisplayName+"</a></li>";
+				$("body").empty();
+				groups.forEach(function(group){
+					$.getJSON('data/'+group+'.json', function(users) {
+						var userHTML = "<h2 style='width:999px;padding:10px;'>"+group+"</h2><div style='width:999px;'><ul>";
+						users.forEach(function(user){
+							userHTML += "<li> <a href='index.html?userKey="+user.key+"&group="+group+"'>"+user.googlePlusDisplayName+"</a></li>";
+						});
+						userHTML += "</ul></div>"
+						$("body").append(userHTML);
 					});
-					userHTML += "</ul></div>"
-					$("#frame").replaceWith(userHTML);
-					$("#layer").replaceWith();
 				});
 			}else{
 				var querystring = window.location.href.substring(questionIndex);
+				var arrayParams = querystring.split("&");
+				var groupArray = arrayParams[1].split("=");
+				var group = groupArray[1];
+				params = [group].concat(groups,[group]);
+				//console.log("params:"+params);
 				$(function(){
 					loadRef();
-					setInterval(loadRef, 60*1000);
+					setInterval(loadRef, FRAME_SECONDS*1000);
 				});
 			}
 			
 			//TODO: show info onload
 			function loadRef(){
-				document.getElementById("frame").src = refs[(screenIndex++)%refs.length]+querystring;
-				console.log("showing... "+refs[screenIndex%refs.length]);
+				console.log("showing... "+refs[(screenIndex)%refs.length]+arrayParams[0]+"&group="+params[(screenIndex)%params.length]);
+				document.getElementById("frame").src = refs[(screenIndex)%refs.length]+arrayParams[0]+"&group="+params[(screenIndex)%params.length];
+				screenIndex++;
 			}
 		</script>
-	</head>
-	<body>
-		<iframe id="frame" style="height:750px; width:999px;"></iframe>
-		<div id="layer"></div>
 	</body>
 </html>
