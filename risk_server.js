@@ -297,7 +297,7 @@ function getUserGroup(userKey){
   for(var i=0;i<groups.length;i++){
     var users = require('./data/'+groups[i]+'.json');
     for(var j=0;j<users.length;j++){
-      if(users[i].key == userKey){
+      if(users[j].key == userKey){
         return groups[i];
       }
     }
