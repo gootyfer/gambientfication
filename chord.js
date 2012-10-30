@@ -28,10 +28,10 @@ d3.json("data/"+group+".json", function(users){
       matrix[2*i] = [];
       matrix[2*i+1] = [];
       for(var j=0; j<users.length;j++){
-        matrix[2*i].push(0);
-        if(suggested[i][j]>0 && suggested[i][j] === accepted[i][j]){
+        if(suggested[i][j]>0 && suggested[i][j] === accepted[j][i]){
           suggested[i][j]+=0.001;
         }
+        matrix[2*i].push(0);
         matrix[2*i].push(suggested[i][j]);
         matrix[2*i+1].push(accepted[i][j]);
         matrix[2*i+1].push(0);
