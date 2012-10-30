@@ -1,5 +1,11 @@
-d3.json("data/users.json", function(users){
-  d3.json("chord", function(chordData){
+var questionIndex = window.location.href.indexOf('?');
+var querystring = window.location.href.substring(questionIndex);
+var arrayParams = querystring.split("&");
+var groupArray = arrayParams[0].split("=");
+var group = groupArray[1];
+
+d3.json("data/"+group+".json", function(users){
+  d3.json("chord?group="+group, function(chordData){
     //Users
     var colors = ['#d81820','#369546', '#3278a9','#e9b926', '#6e5e3c', '#c8148e', '#6c6e70', '#231f20'];
     

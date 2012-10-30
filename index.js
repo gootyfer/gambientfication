@@ -256,7 +256,9 @@ function zeros(dimensions) {
 }
 
 var getChordData = function(request, response){
-	var users = require('./data/users.json');
+	var my_url = url.parse(request.url);
+	var params = querystring.parse(my_url.query);
+	var users = require('./data/'+params['group']+'.json');
 	var userKeys = [];
 	users.forEach(function(user){
 		userKeys.push(user.key);
