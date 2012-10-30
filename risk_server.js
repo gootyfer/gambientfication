@@ -322,7 +322,7 @@ newEvent = function(userKey, eventType){
         break;
       }
     }
-    if(found && !game.endOfGame){
+    if(found && !game.gameOver){
       switch(eventType){
         case 'read':
             game.users[userId].read +=1;

@@ -92,7 +92,7 @@ function getUserInfo(game, userId){
   var progress = "<div id='gameover'><div>GAME OVER</div></div>";
   var countryName = "";
 
-  if(!game.endOfGame){
+  if(!game.gameOver){
     var regionToConquer = game.continent.regions[game.users[userId].region];
     for(var i=0; i<regionToConquer.countries.length;i++){
       if(regionToConquer.countries[i].code == game.users[userId].country){
